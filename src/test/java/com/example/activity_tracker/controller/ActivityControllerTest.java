@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles; // 👈 add this import
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -20,8 +21,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest // loads full Spring context (your controller is definitely registered)
-@AutoConfigureMockMvc(addFilters = false) // skip security/filters
+@SpringBootTest
+@AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles("test") // 👈 use the test profile that excludes Mongo
 class ActivityControllerTest {
 
     @TestConfiguration
@@ -33,7 +35,7 @@ class ActivityControllerTest {
     }
 
     @Autowired MockMvc mockMvc;
-    @Autowired ActivityService service; // the mock from MockConfig
+    @Autowired ActivityService service;
     @Autowired ObjectMapper objectMapper;
 
     @Test
