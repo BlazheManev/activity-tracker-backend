@@ -20,10 +20,6 @@ Built with **Spring Boot 3**, **MongoDB**, and **Maven**.
 
 - On every push to the main branch, GitHub Actions automatically builds a new Docker image and pushes it to Docker Hub:  
   [https://hub.docker.com/r/blazhe/activity-tracker-backend](https://hub.docker.com/r/blazhe/activity-tracker-backend)
-
-  Images are tagged both as:
-    - `latest`
-    - The short Git commit SHA for traceability (e.g., `blazhe/activity-tracker-backend:abc1234`).
 ---
 ## 🏗️ Project Setup (Spring Initializr)
 Generated with:
