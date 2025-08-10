@@ -4,8 +4,7 @@ on:
   push:
     branches: [ master ]
     paths:
-      - "backend/**"
-      - ".github/workflows/backend-docker-publish.yml"
+      - "**"
   workflow_dispatch: {}
 
 env:
@@ -30,18 +29,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # ✅ Prepare a safe short tag (never empty)
       - name: Compute image tags
         run: |
           SHA_SHORT="${GITHUB_SHA::7}"
-          if [ -z "$SHA_SHORT" ]; then SHA_SHORT="ci"; fi
+          [ -z "$SHA_SHORT" ] && SHA_SHORT="ci"
           echo "SHA_SHORT=$SHA_SHORT" >> $GITHUB_ENV
 
-      - name: Build & push image
+      - name: Build & push
         uses: docker/build-push-action@v6
         with:
-          context: ./backend
-          file: ./backend/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: true
           platforms: linux/amd64
           tags: |
