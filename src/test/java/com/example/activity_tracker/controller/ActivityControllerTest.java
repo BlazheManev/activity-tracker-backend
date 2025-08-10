@@ -6,10 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,26 +20,21 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ActivityController.class)
-@Import(ActivityControllerTest.MockConfig.class)
+@SpringBootTest // loads full Spring context (your controller is definitely registered)
+@AutoConfigureMockMvc(addFilters = false) // skip security/filters
 class ActivityControllerTest {
 
-    @Configuration
+    @TestConfiguration
     static class MockConfig {
         @Bean
-        public ActivityService activityService() {
+        ActivityService activityService() {
             return Mockito.mock(ActivityService.class);
         }
     }
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ActivityService service;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Autowired MockMvc mockMvc;
+    @Autowired ActivityService service; // the mock from MockConfig
+    @Autowired ObjectMapper objectMapper;
 
     @Test
     void testGetAllActivities() throws Exception {
