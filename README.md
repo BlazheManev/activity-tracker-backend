@@ -13,6 +13,18 @@ Built with **Spring Boot 3**, **MongoDB**, and **Maven**.
 
 ---
 
+## Deployment
+
+- The latest version of the backend is deployed live on Render:  
+  [https://activity-tracker-backend-o0ge.onrender.com/](https://activity-tracker-backend-o0ge.onrender.com/)
+
+- On every push to the main branch, GitHub Actions automatically builds a new Docker image and pushes it to Docker Hub:  
+  [https://hub.docker.com/r/blazhe/activity-tracker-backend](https://hub.docker.com/r/blazhe/activity-tracker-backend)
+
+  Images are tagged both as:
+    - `latest`
+    - The short Git commit SHA for traceability (e.g., `blazhe/activity-tracker-backend:abc1234`).
+---
 ## 🏗️ Project Setup (Spring Initializr)
 Generated with:
 - Project: **Maven**
